@@ -6,9 +6,18 @@ use App\Core\BaseController;
 use App\Core\Request;
 use App\Models\City;
 use App\Models\Contact;
+use App\Services\GeneratorService;
 
 class ContactsController extends BaseController
 {
+    private GeneratorService $generatorService;
+
+    public function __construct(Request $request)
+    {
+        parent::__construct($request);
+        $this->generatorService = new GeneratorService();
+    }
+
     public function list(): void
     {
         $contacts = Contact::all();
@@ -27,7 +36,6 @@ class ContactsController extends BaseController
 
     public function edit(): void
     {
-
         if($this->request->getMethod() === Request::POST) {
             Contact::update($this->request->post('id'), $this->request->post());
             $this->redirect('/');
@@ -40,5 +48,17 @@ class ContactsController extends BaseController
     {
         Contact::delete($this->request->get('id'));
         $this->redirect('/');
+    }
+
+    public function downloadXml(): void
+    {
+        $xmlContent = $this->generatorService->generateXml(Contact::all());
+        $this->sendDownloadResponse($xmlContent, 'application/xml', 'data.xml');
+    }
+
+    public function downloadCsv(): void
+    {
+        $csvContent = $this->generatorService->generateCsv(Contact::all());
+        $this->sendDownloadResponse($csvContent, 'text/csv', 'data.csv');
     }
 }

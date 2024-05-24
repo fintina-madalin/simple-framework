@@ -7,7 +7,7 @@ class Config
     private static array $settings = [
         'db' => [
             'host' => 'localhost',
-            'name' => 'simple_framework2',
+            'name' => 'simple_framework',
             'user' => 'root',
             'password' => 'TestTest1234!!'
         ],

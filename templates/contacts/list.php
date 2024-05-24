@@ -1,6 +1,8 @@
 <div class="container">
-    <div class="row-fluid mb-4">
-        <a href="/add" class="btn btn-success pull-right">Add new contact</a>
+    <div class="row mb-4">
+        <a href="/download/xml" class="col-4 btn btn-warning pull-right">Download XML</a>
+        <a href="/download/csv" class="col-4 btn btn-warning pull-right">Download CSV</a>
+        <a href="/add" class="btn btn-success col-4 pull-right">Add new contact</a>
     </div>
     <div class="row mb-2 pb-1 border-bottom">
         <div class="col-2">First name</div>

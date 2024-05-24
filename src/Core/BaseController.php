@@ -23,4 +23,11 @@ abstract class BaseController
         header("Location: $url");
         exit;
     }
+    protected function sendDownloadResponse(string $content, string $contentType, string $filename)
+    {
+        header('Content-Type: ' . $contentType);
+        header('Content-Disposition: attachment; filename="' . $filename . '"');
+        header('Content-Length: ' . strlen($content));
+        echo $content;
+    }
 }

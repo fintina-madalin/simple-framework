@@ -8,6 +8,11 @@ class Contact extends Model
 {
     protected static string $table = 'contacts';
     public int $city_id;
+    public string $city;
+    public function __construct()
+    {
+        $this->city = $this->city()->name;
+    }
 
     public  function city()
     {

@@ -16,6 +16,9 @@ $router->add([Request::GET, Request::POST], "/add", [ContactsController::class, 
 $router->add([Request::GET, Request::POST], "/edit", [ContactsController::class, 'edit']);
 $router->add([Request::GET], "/delete", [ContactsController::class, 'delete']);
 
+$router->add([Request::GET], '/download/xml', [ContactsController::class, 'downloadXml']);
+$router->add([Request::GET], '/download/csv', [ContactsController::class, 'downloadCsv']);
+
 try {
     $router->dispatch($_SERVER['PATH_INFO'] ?? $_SERVER['REQUEST_URI'], $_SERVER['REQUEST_METHOD']);
 } catch (RouterException|ViewException $e) {
