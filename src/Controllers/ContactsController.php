@@ -53,12 +53,12 @@ class ContactsController extends BaseController
     public function downloadXml(): void
     {
         $xmlContent = $this->generatorService->generateXml(Contact::all());
-        $this->sendDownloadResponse($xmlContent, 'application/xml', 'data.xml');
+        $this->download($xmlContent, 'application/xml', 'data.xml');
     }
 
     public function downloadCsv(): void
     {
         $csvContent = $this->generatorService->generateCsv(Contact::all());
-        $this->sendDownloadResponse($csvContent, 'text/csv', 'data.csv');
+        $this->download($csvContent, 'text/csv', 'data.csv');
     }
 }
