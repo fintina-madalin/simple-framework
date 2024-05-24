@@ -1,0 +1,45 @@
+#!/usr/bin/env php
+<?php
+
+use App\Core\Database;
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+if(!isset($argv[1])){
+    help();
+    die;
+}
+switch ($argv[1]) {
+    case 'serve':
+        echo "<pre>" . shell_exec('cd public && php -S 127.0.0.1:8000') . "</pre>\n";
+        break;
+    case 'db_create':
+        $db = Database::getInstance();
+        try {
+            $db->query(file_get_contents(__DIR__ . '/db_create.sql'));
+            echo "Database created\n";
+        } catch (Exception $e) {
+            echo $e->getMessage() . "\n";
+        }
+        break;
+    case 'db_insert':
+        $db = Database::getInstance();
+        try {
+            $db->query(file_get_contents(__DIR__ . '/db_insert.sql'));
+            echo "Data inserted into database\n";
+        } catch (Exception $e) {
+            echo $e->getMessage() . "\n";
+        }
+        break;
+    default:
+        help();
+        break;
+}
+die;
+function help()
+{
+    echo "Usage:\n";
+    echo "./simple serve | starts a new php webserver\n";
+    echo "./simple db_create | creates the database structure using the db_create.sql file\n";
+    echo "./simple db_insert | inserts data into the database using the db_insert.sql file\n";
+}
