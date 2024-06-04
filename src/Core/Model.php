@@ -5,6 +5,7 @@ namespace App\Core;
 class Model
 {
     protected static string $table;
+    protected static ?string $parentKey = null;
 
     public static function all(): false|array
     {
@@ -43,5 +44,20 @@ class Model
     {
         $db = Database::getInstance();
         return $db->delete(static::$table, ['id' => $id]);
+    }
+
+    public function deleteWithChildren(): bool|\PDOStatement
+    {
+        // Check if the model has a static property called 'parentKey'
+        if (property_exists(static::class, 'parentKey')) {
+            // Retrieve children associated with this model instance
+            $children = static::where(static::$parentKey, $this->id);
+            // Delete each child
+            foreach ($children as $child) {
+                $child->delete();
+            }
+        }
+        // Finally, delete the model itself
+        return static::delete($this->id);
     }
 }
